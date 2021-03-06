@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CharRoom</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button v-on:click="testConnection">测试连接</button>
+    <input v-model="input" type="text" placeholder="请输入">
+    <button v-on:click="sendMessage">发送</button>
+    <p>{{message}}</p>
+  </div>
+</body>
+
+</html>
+
+<script>
+  const myApp = {
+    data() {
+      return {
+        input: '',
+        message: '',
+      }
+    },
+    methods: {
+      testConnection() {
+        $.ajax({
+          type: "GET",
+          url: "http://127.0.0.1:3000/",
+          success: function (response, status) {
+            console.log(response);
+          }
+        });
+      },
+
+      sendMessage() {
+        $.ajax({
+          type: "POST",
+          data: this.input,
+          url: "http://127.0.0.1:3000/",
+          success: function (response, status) {
+            console.log(response)
+          }
+        });
+      },
+    },
+    mounted() { }
+  }
+
+  const app = Vue.createApp(myApp)
+  app.mount('#app')
+</script>
